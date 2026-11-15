@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maya's Quizzes</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; min-height: 100%; }
+  body {
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    color: #fff;
+    background: #0b1026;
+    background-image:
+      radial-gradient(900px 600px at 15% 10%, rgba(124, 58, 237, 0.45), transparent 60%),
+      radial-gradient(800px 600px at 85% 20%, rgba(52, 211, 153, 0.32), transparent 60%),
+      radial-gradient(900px 700px at 50% 100%, rgba(34, 211, 238, 0.28), transparent 60%),
+      linear-gradient(160deg, #0b1026 0%, #1b1445 55%, #0b1026 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    padding: 32px 24px 48px;
+    overflow-x: hidden;
+  }
+  .orb { position: fixed; border-radius: 50%; filter: blur(70px); opacity: 0.5; pointer-events: none; z-index: 0; animation: float 14s ease-in-out infinite alternate; }
+  .orb.o1 { width: 320px; height: 320px; background: #7c3aed; top: -80px; left: -60px; }
+  .orb.o2 { width: 280px; height: 280px; background: #34d399; bottom: -60px; right: -40px; animation-delay: -6s; }
+  @keyframes float { from { transform: translateY(-18px); } to { transform: translateY(22px); } }
+  .wrap { position: relative; z-index: 1; max-width: 980px; margin: 0 auto; }
+  .back {
+    display: inline-block; font-size: 22px; font-weight: bold; color: #fff; text-decoration: none;
+    padding: 12px 24px; border-radius: 999px; background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.35); backdrop-filter: blur(6px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    transition: transform 0.25s ease, background 0.25s ease;
+  }
+  .back:hover, .back:focus-visible { transform: translateY(-3px) scale(1.03); background: rgba(255, 255, 255, 0.24); }
+  .back:focus-visible { outline: 4px solid #fff; outline-offset: 4px; }
+  header { text-align: center; margin: 28px 0 8px; }
+  h1 {
+    font-size: 60px; line-height: 1.05; margin: 0 0 10px; letter-spacing: -1px;
+    background: linear-gradient(90deg, #6ee7b7, #a5b4fc 50%, #fda4af);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  header p { font-size: 24px; color: #c7d2fe; margin: 0 0 30px; }
+  h2 { font-size: 30px; margin: 38px 0 16px; color: #e2e8f0; display: flex; align-items: center; gap: 12px; }
+  h2::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(255,255,255,0.4), transparent); }
+  .grid { display: flex; flex-wrap: wrap; gap: 18px; perspective: 1200px; }
+  .quiz {
+    display: block; width: 300px; max-width: 100%; flex: 1 1 280px;
+    border-radius: 22px; padding: 26px 24px; text-decoration: none; color: #fff;
+    transform-style: preserve-3d; transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.5), inset 0 2px 0 rgba(255, 255, 255, 0.22), inset 0 -14px 28px rgba(0, 0, 0, 0.22);
+    overflow: hidden; position: relative;
+  }
+  .quiz::before {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(115deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.05) 32%, transparent 55%);
+    pointer-events: none;
+  }
+  .quiz:hover, .quiz:focus-visible { transform: translateY(-8px) rotateX(4deg) rotateY(-3deg) scale(1.02); box-shadow: 0 28px 52px rgba(0, 0, 0, 0.55), inset 0 2px 0 rgba(255, 255, 255, 0.28), inset 0 -14px 28px rgba(0, 0, 0, 0.22); }
+  .quiz:focus-visible { outline: 4px solid #fff; outline-offset: 4px; }
+  .quiz.maths { background: linear-gradient(150deg, #34d399 0%, #059669 60%, #065f46 100%); }
+  .quiz.spanish { background: linear-gradient(150deg, #60a5fa 0%, #2563eb 60%, #1e3a8a 100%); }
+  .quiz.science { background: linear-gradient(150deg, #fbbf24 0%, #ea580c 60%, #7c2d12 100%); }
+  .quiz .name { font-size: 28px; font-weight: bold; margin-bottom: 6px; }
+  .quiz .desc { font-size: 19px; color: rgba(255, 255, 255, 0.9); }
+  .quiz .new {
+    display: inline-block; font-size: 15px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase;
+    background: rgba(255, 255, 255, 0.95); color: #1e1b4b; border-radius: 999px; padding: 4px 12px; margin-bottom: 10px;
+  }
+  footer { text-align: center; margin-top: 52px; font-size: 19px; color: #94a3b8; letter-spacing: 1px; }
+  @media (max-width: 700px) {
+    h1 { font-size: 42px; }
+    header p { font-size: 20px; }
+    .quiz .name { font-size: 25px; }
+  }
+</style>
+</head>
+<body>
+<div class="orb o1"></div>
+<div class="orb o2"></div>
+
+<div class="wrap">
+  <a class="back" href="https://zmnakoahmed.github.io/">← Main page</a>
+
+  <header>
+    <h1>Quizzes</h1>
+    <p>Pick a quiz and play</p>
+  </header>
+
+  <h2>🔢 Maths</h2>
+  <div class="grid">
+    <a class="quiz maths" href="https://zmnakoahmed.github.io/maya-quizzes/maths8.html"><span class="new">Newest</span><div class="name">Maths Quiz 8</div><div class="desc">Decimal multiplication</div></a>
+    <a class="quiz maths" href="https://zmnakoahmed.github.io/maya-quizzes/maths7.html"><div class="name">Maths Quiz 7</div><div class="desc">Carry and tens zero</div></a>
+    <a class="quiz maths" href="https://zmnakoahmed.github.io/maya-quizzes/maths6.html"><div class="name">Maths Quiz 6</div><div class="desc">Multiplying decimals</div></a>
+    <a class="quiz maths" href="https://zmnakoahmed.github.io/maya-quizzes/maths5.html"><div class="name">Maths Quiz 5</div><div class="desc">Multiplying decimals</div></a>
+    <a class="quiz maths" href="https://zmnakoahmed.github.io/maya-quizzes/maths4.html"><div class="name">Maths Quiz 4</div><div class="desc">Multiplying decimals</div></a>
+    <a class="quiz maths" href="https://zmnakoahmed.github.io/maya-quizzes/quiz3.html"><div class="name">Maths Quiz 3</div><div class="desc">Harder BODMAS</div></a>
+    <a class="quiz maths" href="https://zmnakoahmed.github.io/maya-quizzes/index.html"><div class="name">Maths Quiz 2</div><div class="desc">BODMAS</div></a>
+  </div>
+
+  <h2>🇪🇸 Spanish</h2>
+  <div class="grid">
+    <a class="quiz spanish" href="https://zmnakoahmed.github.io/maya-quizzes/spanish5.html"><span class="new">Newest</span><div class="name">Spanish Quiz 5</div><div class="desc">Animals and colours</div></a>
+    <a class="quiz spanish" href="https://zmnakoahmed.github.io/maya-quizzes/spanish4.html"><div class="name">Spanish Quiz 4</div><div class="desc">Family words and likes</div></a>
+    <a class="quiz spanish" href="https://zmnakoahmed.github.io/maya-quizzes/spanish3.html"><div class="name">Spanish Quiz 3</div><div class="desc">Home and everyday words</div></a>
+    <a class="quiz spanish" href="https://zmnakoahmed.github.io/maya-quizzes/spanish2.html"><div class="name">Spanish Quiz 2</div><div class="desc">14 questions</div></a>
+    <a class="quiz spanish" href="https://zmnakoahmed.github.io/maya-quizzes/spanish1.html"><div class="name">Spanish Quiz 1</div><div class="desc">10 questions</div></a>
+  </div>
+
+  <h2>🔬 Science</h2>
+  <div class="grid">
+    <a class="quiz science" href="https://zmnakoahmed.github.io/maya-quizzes/science1.html"><div class="name">Science Quiz 1</div><div class="desc">The human body</div></a>
+  </div>
+
+  <footer>Made for Maya</footer>
+</div>
+</body>
+</html>
